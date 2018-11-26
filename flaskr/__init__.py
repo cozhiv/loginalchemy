@@ -1,13 +1,16 @@
 import os
 from flask import Flask
 
+
 def create_app(test_config=None):
     #create and configure
     app = Flask(__name__, instance_relative_config = True)
+    #api = Api(app)
     app.config.from_mapping(
         SECRET_KEY = "dev",
         #DATABASE= os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
+    
     #print(test_config)
     if test_config is None:
         #load instance config, if it exists, when not in test mode
@@ -20,6 +23,8 @@ def create_app(test_config=None):
     except OSError:
         pass
     
+    
+
     # just hello world!
     @app.route('/hello')
     def hello():
@@ -31,12 +36,15 @@ def create_app(test_config=None):
         db.db_session.remove()
     db.init_db()
 
+
     #from . import db
     #db.init_app(app)
 
     from . import auth
     app.register_blueprint(auth.bp)
 
+    from . import rest
+    app.register_blueprint(rest.bp)
     #from . import blog
     #app.register_blueprint(blog.bp)
     #app.add_url_rule('/','index')
