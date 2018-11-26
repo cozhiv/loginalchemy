@@ -2,8 +2,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
+import pymysql
 
-engine = create_engine('sqlite:////tmp/test.db', convert_unicode=True)
+engine = create_engine(
+      "mysql+pymysql://root:root@localhost/back")
+#?encoding=utf8
+#?host=localhost?port=3306
+#engine = create_engine('sqlite:////tmp/test.db', convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
